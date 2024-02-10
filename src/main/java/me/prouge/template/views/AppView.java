@@ -10,4 +10,13 @@ import me.prouge.guicefx.annotations.FXView;
 public class AppView extends View {
 
 
+    @Override
+    public void close() {
+
+    }
+
+    @Override
+    public void open() {
+
+    }
 }
