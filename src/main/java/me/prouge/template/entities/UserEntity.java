@@ -5,13 +5,23 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Getter;
+import lombok.Setter;
 
-@Entity
+@Entity(name="USER")
+@Getter
+@Setter
 public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    /*
+      @ManyToOne
+      @OneToMany
+      private List<Participant> participantList = new ArrayList<>();
+     */
 
     private String email;
 
@@ -24,14 +34,5 @@ public class UserEntity {
 
     public UserEntity() {
     }
-
-    private Long getId() {
-        return this.id;
-    }
-
-    private void setId(Long id) {
-        this.id = id;
-    }
-
 
 }

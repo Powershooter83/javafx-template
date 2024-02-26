@@ -1,0 +1,4 @@
+.cell {
+    -fx-background-color: lightblue !important;
+    -fx-border-radius: 20px;
+}
