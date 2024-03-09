@@ -18,20 +18,8 @@ public class ViewFactory {
     private AppController appController;
 
     public void showApp() {
-        final FXMLLoader loader = Model.getLoader("app");
-        Scene scene = null;
-
-        try {
-            appController = new AppController();
-            loader.setController(appController);
-            final Parent root = loader.load();
-            scene = new Scene(root);
-            addFocusLostHandler(root);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        showStage(scene, "Dashboard", 500, 500);
+        appController = new AppController();
+        createScene("app", appController, "Dashboard");
     }
 
     public void close(final Node node) {
@@ -48,6 +36,24 @@ public class ViewFactory {
             // Set focus to null to lose focus when clicked outside the panel
             root.requestFocus();
         });
+    }
+
+    private <T> void createScene(final String fileName, final T controller, final String title) {
+        createScene(fileName, controller, title, 800, 600);
+    }
+
+    private <T> void createScene(final String fileName, final T controller, final String title, final int width, final int height) {
+        final FXMLLoader loader = Model.getLoader(fileName);
+        Scene scene = null;
+        try {
+            loader.setController(controller);
+            final Parent root = loader.load();
+            scene = new Scene(root);
+            addFocusLostHandler(root);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        showStage(scene, title, width, height);
     }
 
     private void showStage(final Scene scene, final String title, final int width, final int height) {
