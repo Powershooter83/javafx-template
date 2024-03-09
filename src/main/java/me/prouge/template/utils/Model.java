@@ -4,30 +4,55 @@ import javafx.fxml.FXMLLoader;
 import lombok.Getter;
 import me.prouge.guicefx.persistence.DatabaseManager;
 import me.prouge.template.factories.ViewFactory;
-import me.prouge.template.services.LoginService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @Getter
 public class Model {
     private static final String VIEW_PATH = "/me/prouge/template/views/";
+
     private static Model model;
+
     private final ViewFactory viewFactory;
+
     private final DatabaseManager databaseManager;
-    private final LoginService loginService;
+
+    private static final Logger logger = LogManager.getLogger();
 
     private Model() {
         this.viewFactory = new ViewFactory();
         this.databaseManager = new DatabaseManager();
-        this.loginService = new LoginService();
     }
 
-    public static synchronized Model getInstance() {
+    private static synchronized Model getInstance() {
         if (model == null) {
             model = new Model();
         }
         return model;
     }
 
-    public FXMLLoader getLoader(final String fxmlFile) {
+    public static synchronized DatabaseManager getDBM() {
+        return getInstance().getDatabaseManager();
+    }
+
+    public static synchronized ViewFactory getVF() {
+        return getInstance().getViewFactory();
+    }
+
+    public static synchronized FXMLLoader getLoader(final String fxmlFile) {
+        return getInstance().load(fxmlFile);
+    }
+
+    public static synchronized void log(final String log) {
+        getInstance().logError(log);
+    }
+
+    private FXMLLoader load(final String fxmlFile) {
         return new FXMLLoader(getClass().getResource(VIEW_PATH + fxmlFile + ".fxml"));
     }
+
+    private void logError(final String log) {
+        logger.error(log);
+    }
+
 }

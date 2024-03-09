@@ -18,7 +18,7 @@ public class ViewFactory {
     private AppController appController;
 
     public void showApp() {
-        final FXMLLoader loader = Model.getInstance().getLoader("app");
+        final FXMLLoader loader = Model.getLoader("app");
         Scene scene = null;
 
         try {
